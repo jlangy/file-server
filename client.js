@@ -1,14 +1,19 @@
 const net = require('net');
+const args = process.argv.slice(2,5);
+const IP = args[0];
+const PORT = args[1];
+const fileName = args[2];
 
 const conn = net.createConnection({
-  host: 'localhost',
-  port: 3000
+  host: IP,
+  port: PORT
 });
 
 conn.setEncoding('utf8');
 
 conn.on('connect', () => {
-  conn.write('Hey now brown cow'); 
+  console.log(`connected on port ${PORT}...`)
+  conn.write(fileName); 
 });
 
 conn.on('data', (data) => {
