@@ -11,7 +11,13 @@ server.on('connection', (client) => {
     const filePath = 'serverDir/' + filename;
     fs.exists(filePath, (exists) => {
       if (exists){
-        console.log('found it!');
+        fs.readFile(filePath, 'utf8', (err, contents) => {
+          if(err){
+            client.write('Error retrieving file');
+          } else {
+            client.write(contents);
+          }
+        })
       } else {
         console.log('cant find the file!');
       }
